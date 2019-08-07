@@ -1,34 +1,16 @@
-#include<bits/stdc++.h>
-using namespace std;
-int FillHeight(int p[],int node,int visited[],int height[]){
-    if(p[node]==-1){
-        visited[node]=1;
-        return 0;
-    }
-    if(visited[node]){
-            return height[node];
-        }
-    visited[node]=1;
-    height[node]=1+FillHeight(p,p[node],visited,height);
-
-    return height[node];
+//Check if Binary tree is a BST
+bool subLess(Node* root, int data){
+    if(roott==NULL) return true;
+    if(data>=root->data&&subLess(root->right)&&subLess(root->left)) return true;
+    return false;
 }
-int findHeight(int parent[],int n){
-    int maxheight=0;
-    int visited[n];
-    int height[n];
-    memset(visited,0,sizeof(visited));
-    memset(height,0,sizeof(height));
-    for(int i=0;i<n;i++){
-        if(!visited[i]){
-            height[i]=FillHeight(parent,i,visited,height);
-        }
-        maxheight=max(maxheight,height[i]);
-    }
-    return maxheight;
+bool subGreat(Node* root, int data ){
+    if(roott==NULL) return true;
+    if(data<root->data&&subGreat(root->right)&&subGreat(root->left)) return true;
+    return false;
 }
-int main(){
-    int parent[]={-1, 0, 0, 0, 3, 1, 1, 2};
-    int n=sizeof(parent)/sizeof(parent[0]);
-    cout<<findHeight(parent,n);
+bool isBST(Node* root){
+if(root==NULL) return true;
+if(subLess(root->left,root->data)&&subGreat(root->right,root->data)&&isBST(root->left)&&isBST(root->right)) return true;
+else return false;
 }
